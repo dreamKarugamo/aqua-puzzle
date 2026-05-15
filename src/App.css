@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP:wght@300;700&display=swap');
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#start-container, .main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    height: 60vh;
+    width: 60vw;
+    text-align: center;
+    margin: auto auto;
+}
+
+.main-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70vw;
+    max-width: 1000px;
+    min-height: 70vh;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    text-align: center;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+p {
+    letter-spacing: 3px;
+    opacity: 0.8;
+    margin-bottom: 30px;
+}
+
+#button {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    padding: 15px 50px;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#button:hover {
+    background: #fff;
+    color: #1a2a6c;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+#glass-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(15px, 5vw, 100px);
+    margin-top: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px 5px 20px 20px;
+    height: 180px;
+    width: 90px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.glass-container.selected {
+    border-color: #00d2ff;
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.8), inset 0 0 10px rgba(0, 210, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.glass-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-items p {
+    margin: 10px 0;
+}
+
+.water {
+    background: linear-gradient(180deg, #00d2ff 0%, #3a7bd5 100%);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.water::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    filter: blur(2px);
+    animation: wave 2s infinite linear;
+}
+
+h1, h2 {
+    margin-top: 30px;
+}
+
+@keyframes wave {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0%); }
+}
+
+.water-amount {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#game-explain {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+#goal-display {
+    font-weight: 700;
+    color: #00d2ff;
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+.clear-decoration {
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    font-family: 'Cinzel', serif;
+    animation: celebrate 1s ease infinite alternate;
+}
+
+@keyframes celebrate {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.feedback-message {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin: 4px 0 0;
+    letter-spacing: 1px;
+    animation: fadeOut 2s ease forwards;
+}
+
+@keyframes fadeOut {
+    0%, 70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* 一手戻す・リセットボタン */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.action-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.action-button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.action-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.new-game-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 10px;
+}
+
+.modal-overlay {
+    /*top: 0;
+    left: 0;*/
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px 50px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    margin: 0 0 12px;
+}
+
+.modal-text {
+    font-size: 1rem;
+    opacity: 0.85;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-button {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1rem;
+    padding: 12px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 2px;
+}
+
+.modal-button.primary {
+    background: #00d2ff;
+    color: #1a2a6c;
+    border: none;
+    font-weight: 700;
+}
+
+.modal-button.primary:hover {
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+.modal-button.secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.modal-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@media screen and (max-width: 600px) {
+    #start-container, .main-container {
+        width: 90vw;
+        height: auto;
+        min-height: 80vh;
+        padding: 30px 20px;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+    }
+
+    #game-explain {
+        font-size: 1.3rem;
+        margin-top: 10px;
+    }
+
+    #glass-wrapper {
+        margin-top: 20px;
+        justify-content: space-around;
+    }
+
+    .glass-container {
+        height: 140px;
+        width: 70px;
+    }
+
+    .controls button {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    body {
+        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+}
