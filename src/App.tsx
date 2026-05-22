@@ -99,6 +99,15 @@ const App: React.FC = () => {
         setGoalAmount(generateGoal());
     };
 
+    const handleQuit = () => {
+        setIsStarted(false); // タイトル画面に戻す
+        setAmounts(GLASS_VOLUMES.map(() => 0));
+        setSelectedIdx(null);
+        setHistory([]);
+        setMessage(null);
+        setGoalAmount(generateGoal());
+    };
+
     if (!isStarted) {
         return (
             <div id="start-container">
@@ -157,19 +166,26 @@ const App: React.FC = () => {
                 <div className="modal-overlay">
                     <div className="modal">
                         <h2 className="modal-title">Mission Complete!</h2>
-                        <p className="modal-text">ゴール: {goalAmount}ml 達成！</p>
+                        <p className="modal-text">
+                            ゴール: {goalAmount}ml 達成！
+                        </p>
                         <div className="modal-buttons">
-                            <button className="modal-button primary" onClick={handleNewGame}>
+                            <button
+                                className="modal-button primary"
+                                onClick={handleNewGame}
+                            >
                                 ニューゲームをする
                             </button>
-                            <button className="modal-button secondary" onClick={() => window.close()}>
+                            <button
+                                className="modal-button secondary"
+                                onClick={handleQuit}
+                            >
                                 やめる
                             </button>
                         </div>
                     </div>
                 </div>
             )}
-            
         </div>
     );
 };
