@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Glass from "./components/Glass";
 import "./App.css";
 
-const GLASS_VOLUMES = [13, 17, 23, 41] as const;
-const GOAL_RANGE = { MIN: 13, MAX: 80 };
+const GLASS_VOLUMES = [23, 41, 53, 67] as const;
+const GOAL_RANGE = { MIN: 24, MAX: 150 };
 
 const generateGoal = () => {
     let goal: number;
