@@ -1,18 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP:wght@300;700&display=swap');
 
+/* 全体設定：スクロールを許容し、潰れを防ぐ */
 body {
     font-family: 'Noto Sans JP', sans-serif;
     background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     margin: 0;
-    width: 100vw;
-    height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 20px;
 }
 
 @keyframes gradientBG {
@@ -21,6 +25,7 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+/* 共通コンテナ：固定の高さを廃止し、中身に応じて可変にする */
 #start-container, .main-container {
     display: flex;
     flex-direction: column;
@@ -28,35 +33,43 @@ body {
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     padding: 40px;
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    height: 60vh;
-    width: 60vw;
+    width: 90vw;
+    width: 80vw;
+    max-width: 700px; /* スタート画面はコンパクトに */
+    min-height: 400px;
+    height: auto; /* 固定値を排除 */
     text-align: center;
-    margin: auto auto;
+    box-sizing: border-box;
+    margin: auto;
 }
 
+/* ゲーム画面用コンテナ：横幅を広く確保 */
 .main-container {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70vw;
-    max-width: 1000px;
-    min-height: 70vh;
-    padding: 60px 40px;
-    box-sizing: border-box;
-    overflow: visible;
+    max-width: 900px;
+    width: 95vw;
+    min-height: 600px;
+    padding: 40px 30px;
+    position: relative; /* 難易度バッジの絶対配置用 */
 }
 
 h1 {
     font-family: 'Cinzel', serif;
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* 画面幅に合わせて伸縮 */
     text-align: center;
     letter-spacing: 5px;
+    margin-top: 0;
     margin-bottom: 20px;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 p {
@@ -65,10 +78,11 @@ p {
     margin-bottom: 30px;
 }
 
+/* ボタンの共通スタイル */
 #button {
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    padding: 15px 50px;
+    font-size: 1.2rem;
+    padding: 12px 30px;
     background: transparent;
     color: #fff;
     border: 2px solid #fff;
@@ -86,23 +100,40 @@ p {
     transform: translateY(-3px);
 }
 
+/* グラス全体のラッパー：画面幅が狭いときは自動改行 */
 #glass-wrapper {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: clamp(15px, 5vw, 100px);
-    margin-top: 40px;
-    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap; /* はみ出し防止の最重要プロパティ */
     width: 100%;
+    box-sizing: border-box;
 }
 
+/* グラス単体ユニット */
+.glass-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.glass-items p {
+    margin: 8px 0;
+    letter-spacing: 1px;
+}
+
+/* グラス本体 */
 .glass-container {
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-top: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 5px 5px 20px 20px;
-    height: 180px;
-    width: 90px;
+    height: 160px;
+    width: 80px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -113,27 +144,10 @@ p {
 .glass-container.selected {
     border-color: #00d2ff;
     box-shadow: 0 0 25px rgba(0, 210, 255, 0.8), inset 0 0 10px rgba(0, 210, 255, 0.5);
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
-.glass-items {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.glass-items p {
-    margin: 10px 0;
-}
-
+/* 水のエフェクト */
 .water {
     background: linear-gradient(180deg, #00d2ff 0%, #3a7bd5 100%);
     width: 100%;
@@ -156,10 +170,6 @@ p {
     animation: wave 2s infinite linear;
 }
 
-h1, h2 {
-    margin-top: 30px;
-}
-
 @keyframes wave {
     from { transform: translateX(-50%); }
     to { transform: translateX(0%); }
@@ -167,30 +177,41 @@ h1, h2 {
 
 .water-amount {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #fff;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* 各グラスの操作ボタン */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
 }
 
 .controls button {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #fff;
-    padding: 8px 15px;
+    padding: 6px 12px;
     font-size: 0.8rem;
     border-radius: 8px;
-    margin-top: 10px;
     transition: 0.2s;
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .controls button:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* ミッションテキスト */
 #game-explain {
-    font-size: 1.8rem;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
     font-weight: 300;
+    text-align: center;
 }
 
 #goal-display {
@@ -208,13 +229,13 @@ h1, h2 {
 
 @keyframes celebrate {
     from { transform: scale(1); }
-    to { transform: scale(1.1); }
+    to { transform: scale(1.05); }
 }
 
 .feedback-message {
     color: #ff6b6b;
     font-size: 0.9rem;
-    margin: 4px 0 0;
+    margin: 8px 0;
     letter-spacing: 1px;
     animation: fadeOut 2s ease forwards;
 }
@@ -224,11 +245,13 @@ h1, h2 {
     100% { opacity: 0; }
 }
 
-/* 一手戻す・リセットボタン */
+/* 下部アクションボタン群 */
 .action-buttons {
     display: flex;
     gap: 12px;
-    margin-top: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .action-button {
@@ -241,6 +264,7 @@ h1, h2 {
     cursor: pointer;
     transition: 0.2s;
     font-family: 'Noto Sans JP', sans-serif;
+    white-space: nowrap;
 }
 
 .action-button:hover:not(:disabled) {
@@ -252,47 +276,41 @@ h1, h2 {
     cursor: not-allowed;
 }
 
-.new-game-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
-    padding: 8px 20px;
-    font-size: 0.85rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-family: 'Noto Sans JP', sans-serif;
-    margin-top: 10px;
-}
-
+/* モーダル（クリア画面） */
 .modal-overlay {
-    /*top: 0;
-    left: 0;*/
     width: 100%;
     height: 100%;
-    border-radius: 30px;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 30px;
 }
 
 .modal {
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 24px;
-    padding: 40px 50px;
+    padding: 30px 40px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
 }
 
 .modal-title {
     font-family: 'Cinzel', serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #ffd700;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
     margin: 0 0 12px;
@@ -301,8 +319,9 @@ h1, h2 {
 .modal-text {
     font-size: 1rem;
     opacity: 0.85;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     letter-spacing: 2px;
+    line-height: 1.6;
 }
 
 .modal-buttons {
@@ -314,11 +333,13 @@ h1, h2 {
 .modal-button {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 1rem;
-    padding: 12px 40px;
+    padding: 12px 30px;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     letter-spacing: 2px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .modal-button.primary {
@@ -343,46 +364,37 @@ h1, h2 {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* スマートフォン・タブレット向けのレスポンシブ微調整 */
 @media screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
     #start-container, .main-container {
-        width: 90vw;
-        height: auto;
-        min-height: 80vh;
-        padding: 30px 20px;
-        box-sizing: border-box;
+        width: 100%;
+        padding: 30px 16px;
     }
 
-    h1 {
-        font-size: 2.2rem;
-        letter-spacing: 3px;
-    }
-
-    #game-explain {
-        font-size: 1.3rem;
-        margin-top: 10px;
+    .main-container {
+        padding-top: 50px; /* 難易度表示バッジとの被り防止 */
     }
 
     #glass-wrapper {
-        margin-top: 20px;
-        justify-content: space-around;
+        gap: 12px;
+        margin: 20px 0;
     }
 
     .glass-container {
-        height: 140px;
-        width: 70px;
+        height: 130px;
+        width: 65px;
+    }
+
+    .water-amount {
+        font-size: 0.85rem;
     }
 
     .controls button {
-        padding: 6px 10px;
+        padding: 6px 8px;
         font-size: 0.75rem;
-        margin-top: 5px;
-        width: 100%;
-    }
-
-    body {
-        overflow-y: auto;
-        height: auto;
-        min-height: 100vh;
-        padding: 20px 0;
     }
 }
